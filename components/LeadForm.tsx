@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SHEET_API_URL } from '../constants';
+import { FORM_API_URL } from '../constants';
 
 interface LeadFormProps {
     id: string;
@@ -73,24 +73,31 @@ const LeadForm: React.FC<LeadFormProps> = ({ id, isModal, projectName, pdfUrl, o
         if (pdfUrl) payload.append('pdfUrl', pdfUrl);
 
         try {
-            // Send data to Google Sheet
-            // mode: 'no-cors' is required for Google Apps Script Web Apps to avoid CORS errors
-            await fetch(SHEET_API_URL, {
+            await fetch(FORM_API_URL, {
                 method: "POST",
                 body: payload,
-                mode: 'no-cors'
+                headers: { 'Accept': 'application/json' }
             });
 
             if (isModal && pdfUrl) {
                 window.open(pdfUrl, '_blank');
                 alert("Verification Successful! Brochure is opening...");
             } else {
-                alert("Enquiry Verified & Sent to Spreadsheet!");
+                alert("Enquiry Verified & Sent Successfully!");
             }
 
             if (onSuccess) onSuccess();
             // Reset form
-            setFormData({ ...formData, name: '', phone: '', email: '', otp: '' });
+            setFormData({ 
+                name: '', 
+                phone: '', 
+                email: '', 
+                otp: '',
+                project: projectName || '',
+                bhk: '2 BHK',
+                budget: '1.5 Cr+',
+                visitDate: ''
+            });
             setOtpSent(false);
             setGeneratedOtp(null);
 
@@ -100,6 +107,8 @@ const LeadForm: React.FC<LeadFormProps> = ({ id, isModal, projectName, pdfUrl, o
             setIsSubmitting(false);
         }
     };
+
+    const today = new Date().toISOString().split('T')[0];
 
     return (
         <form onSubmit={handleSubmit} className="space-y-3">
@@ -238,15 +247,16 @@ const LeadForm: React.FC<LeadFormProps> = ({ id, isModal, projectName, pdfUrl, o
                         </select>
                     </div>
 
-                    <input
-                        type="date"
-                        name="visitDate"
-                        value={formData.visitDate}
-                        onChange={handleChange}
-                        required
-                        min={new Date().toISOString().split('T')[0]}
-                        className="w-full bg-dark-800/80 border border-gray-600 rounded px-3 py-3 text-gray-300 text-sm focus:outline-none focus:border-gold-400"
-                    />
+                    <div>
+                        <input 
+                            type="date" 
+                            name="visitDate" 
+                            value={formData.visitDate}
+                            onChange={handleChange}
+                            min={today}
+                            className="w-full bg-dark-800/80 border border-gray-600 rounded px-3 py-3 text-gray-300 text-sm focus:outline-none focus:border-gold-400 uppercase"
+                        />
+                    </div>
                 </>
             )}
 

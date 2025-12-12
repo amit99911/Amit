@@ -53,12 +53,14 @@ function App() {
 
             <a 
                 href="https://wa.me/918861887122?text=Hi,%20I%20am%20interested%20in%20Sobha/Adarsh%20Properties." 
-                className="whatsapp-float" 
+                className="whatsapp-float group" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                title="Chat on WhatsApp"
             >
                 <i className="fab fa-whatsapp"></i>
+                <span className="absolute right-full mr-4 top-1/2 -translate-y-1/2 bg-white text-dark-900 px-3 py-1.5 rounded-lg shadow-xl text-sm font-bold opacity-0 group-hover:opacity-100 transition-all duration-300 whitespace-nowrap pointer-events-none hidden md:block">
+                    Chat on WhatsApp
+                </span>
             </a>
         </>
     );

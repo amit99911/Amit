@@ -141,6 +141,5 @@ export const TESTIMONIALS: TestimonialData[] = [
     }
 ];
 
-// Configuration for Google Sheets Integration
-// Replace this URL with your deployed Google Apps Script Web App URL
-export const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbx_YOUR_SCRIPT_ID_HERE/exec";
+// Configuration for Form Submission
+export const FORM_API_URL = "https://formsubmit.co/ajax/primeacresforyou@gmail.com";
